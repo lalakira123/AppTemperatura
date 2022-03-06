@@ -24,45 +24,63 @@ function adicionarValorAPI() {
     promise.catch((erro) => {
         alert("Não foi possível acessar a temperatura da sua região");
         console.log(erro);
-        exibirInputs();
     });
-
-}
-
-function exibirInputs() {
-    const elemento = document.querySelector("header")
-    elemento.classList.remove("escondido")
 }
 
 function buscarDados() {
-    const lat = document.querySelector("input.latitude").value;
-    const lon = document.querySelector("input.longitude").value;
-    if(lat !== "" && lon !== "") {
-        LATITUDE = lat;
-        LONGITUDE = lon;
-        adicionarValorAPI();
-    } else {
-        alert("Dados não podem ser vazios!");
-    }
+    const cidade = document.querySelector("input").value;
+    const ENDPOINT_CITY = `http://api.openweathermap.org/geo/1.0/direct?q=`;
+    const promise = axios.get(`${ENDPOINT_CITY}${cidade}&appid=${apiKEY}`);
+
+    promise.then(verificarCidade)
+
+    promise.catch((erro) => {
+        alert("Não foi possível acessar!");
+        console.log(erro);
+    })
+}
+
+function verificarCidade(response) {
+    LATITUDE = response.data[0].lat;
+    LONGITUDE = response.data[0].lon;
+    adicionarValorAPI();
 }
 
 function pegarDados(response) {
-    console.log(response.data);
+    console.log(response);
     let nomeCidade = response.data.name;
     let temperaturaAtual = response.data.main.temp.toFixed(0);
     let temperaturaMaxima = response.data.main.temp_max.toFixed(0); 
     let temperaturaMinima = response.data.main.temp_min.toFixed(0); 
     let sensacaoTermica = response.data.main.feels_like.toFixed(0);  
-    exibirNaTela(nomeCidade, temperaturaAtual, temperaturaMaxima, temperaturaMinima, sensacaoTermica);
+    let tempo = response.data.weather[0].main.toLowerCase();
+    exibirNaTela(nomeCidade, temperaturaAtual, temperaturaMaxima, temperaturaMinima, sensacaoTermica, tempo);
 }
 
-function exibirNaTela(nomeCidade, temperaturaAtual, temperaturaMaxima, temperaturaMinima, sensacaoTermica) {
+function exibirNaTela(nomeCidade, temperaturaAtual, temperaturaMaxima, temperaturaMinima, sensacaoTermica, tempo) {
     document.querySelector(".quadro .lugar").innerHTML = nomeCidade;
-    document.querySelector(".quadro .temperatura").innerHTML = `${temperaturaAtual}ºC`;
+    fundoTempo(tempo);
+    document.querySelector(".quadro .temperatura").innerHTML += `${temperaturaAtual}ºC`;
     document.querySelector(".info-adicionais .temp-max").innerHTML = `Temperatura Máxima ${temperaturaMaxima}ºC`
     document.querySelector(".info-adicionais .temp-min").innerHTML = `Temperatura Mínima ${temperaturaMinima}ºC`
     document.querySelector(".info-adicionais .sensacao").innerHTML = `Sensação Térmica ${sensacaoTermica}ºC`
-}   
+}
+
+function fundoTempo(tempo) {
+    if(tempo === "clear") {
+        document.querySelector(".quadro .temperatura").innerHTML = `<ion-icon name="sunny-outline"></ion-icon>`;
+    } else if(tempo === "clouds") {
+        document.querySelector(".quadro .temperatura").innerHTML = `<ion-icon name="cloud-outline"></ion-icon>`;
+    } else if(tempo === "rain") {
+        document.querySelector(".quadro .temperatura").innerHTML = `<ion-icon name="rainy-outline"></ion-icon>`;
+    } else if(tempo === "thunderstorm") {
+        document.querySelector(".quadro .temperatura").innerHTML = `<ion-icon name="thunderstorm-outline"></ion-icon>`;
+    } else if (tempo === "snow"){
+        document.querySelector(".quadro .temperatura").innerHTML = `<ion-icon name="snow-outline"></ion-icon>`;
+    } else {
+        document.querySelector(".quadro .temperatura").innerHTML = `<ion-icon name="cloudy-outline"></ion-icon>`;
+    }
+}
 
 getLocation();
 

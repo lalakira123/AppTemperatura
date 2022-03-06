@@ -4,7 +4,11 @@
 
 body {
     font-family: 'Montserrat', sans-serif;
-    background-color: #6597AE;
+    background-image: url('https://media1.giphy.com/media/za5xikuRr0OzK/giphy.gif?cid=790b761104829f04f7402d1b46588f77f5397f72874e3822&rid=giphy.gif&ct=g'); 
+    background-repeat:no-repeat; 
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
 }
 
 header {
@@ -13,10 +17,30 @@ header {
     right: 0;
     left: 0;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     padding: 10px;
-    flex-wrap: wrap;
+    background-color: rgb(189, 193, 202,0.5);
+}
+
+header p {
+    margin-top: 10px;
+    font-weight: 600;
+    font-size: 30px;
+    text-align: center;
+}
+
+header div {
+    margin-top: 10px;
+}
+
+header input {
+    height: 30px;
+}
+
+header button {
+    height: 30px;
 }
 
 main {
@@ -26,10 +50,11 @@ main {
     height: 100vh;
     align-items: center;
     justify-content: center;
+    margin-top: 30px;
 }
 
 main .quadro {
-    background-color: rgb(189, 193, 202,0.3);
+    background-color: rgb(189, 193, 202,0.5);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -46,15 +71,21 @@ main .quadro h1 {
 }
 
 main .quadro h2 {
-    font-size: 20px;
+    font-size: 24px;
     font-weight: 500;
     padding: 15px;
+}
+
+main .quadro .temperatura ion-icon {
+    font-size: 45px;
+    margin-right: 10px;
 }
 
 main .info-adicionais {
     display: flex;
     flex-direction: column;
     font-size: 17px;
+    font-weight: 500;
 }
 
 main .info-adicionais p {
@@ -71,6 +102,10 @@ footer{
     margin-bottom: 10px;
     color: #B29B89
     ;
+}
+
+footer ion-icon {
+    font-size: 15px;
 }
 
 .escondido {
