@@ -47,7 +47,6 @@ function verificarCidade(response) {
 }
 
 function pegarDados(response) {
-    console.log(response);
     let nomeCidade = response.data.name;
     let temperaturaAtual = response.data.main.temp.toFixed(0);
     let temperaturaMaxima = response.data.main.temp_max.toFixed(0); 
