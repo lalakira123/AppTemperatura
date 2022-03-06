@@ -29,7 +29,7 @@ function adicionarValorAPI() {
 
 function buscarDados() {
     const cidade = document.querySelector("input").value;
-    const ENDPOINT_CITY = `http://api.openweathermap.org/geo/1.0/direct?q=`;
+    const ENDPOINT_CITY = `https://api.openweathermap.org/geo/1.0/direct?q=`;
     const promise = axios.get(`${ENDPOINT_CITY}${cidade}&appid=${apiKEY}`);
 
     promise.then(verificarCidade)
